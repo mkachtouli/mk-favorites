@@ -77,9 +77,9 @@ function get_favorites_list() {
 		);
 		$query = new WP_Query( $args );
         ?>
-
-        <?php if ( $query->have_posts() ) : ?>
-            <?php echo '<div><h2>My favorite posts</h2><a href="' . wp_logout_url(get_permalink()) . '" title="Logout">Logout</a></div>'; ?>
+        <?php echo '<div><h2>My favorite posts</h2><a href="' . wp_logout_url(get_permalink()) . '" title="Logout">Logout</a></div>'; ?>
+        <?php if ( $query->have_posts() and !empty($posts_liked) ) : ?>
+            
             <?php while( $query->have_posts() ) :
                 $query->the_post(); ?>
                 <div>
@@ -89,7 +89,6 @@ function get_favorites_list() {
                 </a></div>
             <?php endwhile; ?>
 
-            
             <?php // Pagination
                 $GLOBALS['wp_query']->max_num_pages = $query->max_num_pages;
                 the_posts_pagination( array(
